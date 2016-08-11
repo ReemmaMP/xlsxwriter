@@ -3,11 +3,12 @@ import xlsxwriter
 
 workbook = xlsxwriter.Workbook('hello.xlsx') #Creates the workbook
 worksheet1 = workbook.add_worksheet() #Defaults to Sheet1
-worksheet2 = workbook.add_worksheet('Reemma') #Sheet2 is now called Reemma
+worksheet2 = workbook.add_worksheet('Chart') #Sheet2 is now called Chart
 
 bold = workbook.add_format({'bold': True}) #Adds bold format
 money_format = workbook.add_format({'num_format': '$#,##0'}) #adds number format
 date_format = workbook.add_format({'num_format': 'mmmm d yyyy'}) #add the excel date format
+chart = workbook.add_chart({'type': 'column'}) #creating a chart object
 
 worksheet1.set_column(1,2,15)
 
@@ -39,6 +40,25 @@ for item, date_str, cost in (expenses):
 worksheet1.write(row, 1, 'Total', bold)
 worksheet1.write(row, 3, '=SUM(C2:C4)', money_format)
 
-worksheet2.write('A1', 'Reemma')
+worksheet2.write('A1', 'Simple chart')#title
+
+#data to be plotted
+somedata = [
+	[1,3,5,7,9],
+	[2,4,6,8,10],
+	[5,7,9,3,2],
+]
+
+worksheet2.write_column('A2', somedata[0])
+worksheet2.write_column('B2', somedata[1])
+worksheet2.write_column('C2', somedata[2])
+
+#adding series to configure the chart
+chart.add_series({'values': '=Chart!$A$2:$A$6'})
+chart.add_series({'values': '=Chart!$B$2:$B$6'})
+chart.add_series({'values': '=Chart!$C$2:$C$6'})
+
+#inserting the chart!!
+worksheet2.insert_chart('A7', chart)
 
 workbook.close()
