@@ -58,7 +58,6 @@ chart.add_series({'values': '=Chart!$A$2:$A$6'})
 chart.add_series({'values': '=Chart!$B$2:$B$6'})
 chart.add_series({'values': '=Chart!$C$2:$C$6'})
 
-#inserting the chart!!
-worksheet2.insert_chart('A7', chart)
+worksheet2.insert_chart('A7', chart) #inserting the chart!!
 
 workbook.close()
