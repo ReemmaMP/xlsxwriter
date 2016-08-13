@@ -2,8 +2,19 @@ from datetime import datetime
 import xlsxwriter
 
 workbook = xlsxwriter.Workbook('hello.xlsx') #Creates the workbook
+workbook.set_properties({ #set document properties
+	'title': 'This is a spreadsheet',
+	'subject': 'Contains document properties',
+	'author': 'Reemma Muthal Puredath',
+	'manager': 'Reemma. Again',
+	'company': 'University College London',
+	'category': 'Simple project',
+	'keywords': 'Simple, Sample, Properties',
+	'comments': 'I made this using python and xlsxwriter'})
+workbook.set_custom_property('Checked by', 'Reemma') #you can create properties not defined in standard properties
 worksheet1 = workbook.add_worksheet() #Defaults to Sheet1
 worksheet2 = workbook.add_worksheet('Chart') #Sheet2 is now called Chart
+worksheet3 = workbook.add_worksheet('Reemma')
 
 bold = workbook.add_format({'bold': True}) #Adds bold format
 money_format = workbook.add_format({'num_format': '$#,##0'}) #adds number format
@@ -80,5 +91,8 @@ chart.add_series({'values': '=Chart!$B$2:$B$6'})
 chart.add_series({'values': '=Chart!$C$2:$C$6'})
 
 worksheet2.insert_chart('A7', chart) #inserting the chart!!
+
+worksheet3.write_column('B2', 'Reemma Muthal Puredath')
+worksheet3.insert_image('B3', 'reemma.jpg', {'x_scale':0.30, 'y_scale':0.30})
 
 workbook.close()
